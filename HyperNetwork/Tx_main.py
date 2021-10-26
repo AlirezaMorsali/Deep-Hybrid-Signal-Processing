@@ -1,7 +1,7 @@
 import argparse
 from matplotlib import pyplot as plt
 from tensorflow import keras
-from lib import hdnn, utils
+import utils
 import os
 from models import *
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -55,7 +55,7 @@ base_model = load_model(base_network, "weights/base_model_weights.h5")
 hyper_model = load_model(hyper_network, "weights/hyper_model_weights.h5")
 
 base_model.summary()
-hyper_mode.summary()
+hyper_model.summary()
 # keras.utils.plot_model(model_tx, par.version_name + "_Model.png",
                        # show_shapes=True)
 
@@ -64,7 +64,7 @@ hyper_mode.summary()
 #     loss=keras.losses.MeanAbsoluteError())
 
 # Symbol error rate
-(SERFD, SERNN) = utils.get_tx_ser(par, model_tx)
+(SERFD, SERNN) = utils.get_tx_ser(par, base_model, hyper_model)
 
 # Plotting the results
 fig, ax = plt.subplots(figsize=(10, 10))
