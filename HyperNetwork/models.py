@@ -2,14 +2,13 @@ import numpy as np
 import tensorflow as tf
 
 
-
 def parameterize_model(model, weights):
     flag = 0
     for layer in model.layers[-5:]:
         if 'dense' in layer.name: 
-              new_weights = weights[0, :, :, flag]
-              layer.kernel = new_weights
-              flag += 1
+            new_weights = weights[0, :, :, flag]
+            layer.kernel = new_weights
+            flag += 1
 
 
 def complex_dense(x, units, in_features, AF=False):
@@ -18,7 +17,6 @@ def complex_dense(x, units, in_features, AF=False):
 
     xr = tf.keras.layers.Lambda(lambda x: x[:,:in_features // 2])(x)
     xi = tf.keras.layers.Lambda(lambda x: x[:,in_features // 2:])(x)
-
 
     xr_1 = RL(xr)
     xr_2 = IL(xi)
