@@ -17,7 +17,7 @@ output:
     pred : concatenated output(batch_size, [real, imag])
 '''
     channel = SVD(channel)
-    channel = np.stack([np.real(channel), np.imag(channel)], axis=-1)[None, ...]
+    channel = np.stack([np.real(channel), np.imag(channel), np.angle(train_channel), np.abs(train_channel)], axis=-1)[None, ...]
     x = np.concatenate([np.real(x), np.imag(x)], axis=-1)
 
     generated_parameters = hyper_model(channel)
