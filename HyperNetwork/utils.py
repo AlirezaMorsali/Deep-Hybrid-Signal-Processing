@@ -75,7 +75,7 @@ def inference(x, channel, base_model, hyper_model):
         pred : concatenated output(batch_size, [real, imag])
     '''
     channel = SVD(channel)
-    channel = np.stack([np.real(channel), np.imag(channel)], axis=-1)[None, ...]
+    channel = np.stack([np.real(channel), np.imag(channel), np.angle(channel), np.abs(channel)], axis=-1)[None, ...]
     x = np.concatenate([np.real(x), np.imag(x)], axis=-1)
 
     generated_parameters = hyper_model(channel)
@@ -83,6 +83,7 @@ def inference(x, channel, base_model, hyper_model):
     pred = base_model(x)
 
     return pred
+
 
 def get_tx_ser(par, base_model, hyper_model):
     par.SNR_db = np.arange(par.SNR_range[0], par.SNR_range[1],
